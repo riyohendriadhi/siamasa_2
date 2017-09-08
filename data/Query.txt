@@ -1,0 +1,38 @@
+== Query Siswa terlambat hari ini;
+SELECT siswa.*, absen.* from absen
+JOIN siswa on siswa.nis = absen.nis
+WHERE absen.jam > '00:00:00'
+AND absen.tgl = CURDATE();
+
+== Query Absensi Rekap Perhari
+SELECT absen.tgl, absen.ket, absen.jam_masuk, absen.jam_pulang, siswa.nis,siswa.nama, siswa.jk FROM absen 
+JOIN siswa ON siswa.nis = absen.nis
+WHERE absen.ket <> 'H' AND absen.tgl = CURDATE()	
+
+== Query Edit Keterangan Absen
+SELECT absen.ida, absen.tgl, absen.ket, absen.jam_masuk, absen.jam_pulang, siswa.nis,siswa.nama, siswa.jk FROM siswa
+                            JOIN absen ON siswa.nis = absen.nis
+                            WHERE absen.ida = 3
+
+
+== Query Rekap Absensi Persiswa
+SELECT absen.tgl, absen.jam_masuk, absen.jam_pulang, absen.ket, absen.keterangan FROM absen
+left JOIN siswa ON siswa.nis = absen.nis
+left JOIN semester ON semester.id_semester = absen.id_semester
+WHERE absen.tgl BETWEEN (SELECT semester.tgl_awal FROM semester
+ WHERE semester.id_semester = absen.id_semester)
+AND (SELECT semester.tgl_akhir FROM semester
+ WHERE semester.id_semester = absen.id_semester)
+AND absen.nis = '9985108364'
+
+
+== QUery Jumlah Alfa/sakit/izin/terlambat
+SELECT COUNT(*) jumlah_alfa FROM absen where absen.ket = 'A'
+
+== Query di Rekap Beranda
+SELECT siswa.*,kelas.nama_kelas, absen.* from absen
+JOIN siswa on siswa.nis = absen.nis
+JOIN kelas on kelas.idk = siswa.idk
+WHERE absen.jam_masuk > '00:00:00'
+-- AND absen.tgl = CURDATE();
+AND absen.tgl LIKE '%'

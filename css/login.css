@@ -1,0 +1,10 @@
+body#body_login{
+	background-color: #FFEB3E;
+}
+#container_login{
+	background-color: #FFEB3E;
+}
+h3.panel-title{
+	font-weight: bolder;
+	text-align: center;
+}
